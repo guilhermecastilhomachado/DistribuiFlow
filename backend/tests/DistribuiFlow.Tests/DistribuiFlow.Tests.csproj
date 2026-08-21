@@ -20,6 +20,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\DistribuiFlow.Api\DistribuiFlow.Api.csproj" />
+    <ProjectReference Include="..\..\src\DistribuiFlow.Domain\DistribuiFlow.Domain.csproj" />
+    <ProjectReference Include="..\..\src\DistribuiFlow.Application\DistribuiFlow.Application.csproj" />
   </ItemGroup>
 
 </Project>

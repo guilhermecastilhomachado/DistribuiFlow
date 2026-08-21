@@ -1,6 +1,9 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/DistribuiFlow.Api/DistribuiFlow.Api.csproj" />
+    <Project Path="src/DistribuiFlow.Application/DistribuiFlow.Application.csproj" />
+    <Project Path="src/DistribuiFlow.Domain/DistribuiFlow.Domain.csproj" />
+    <Project Path="src/DistribuiFlow.Infrastructure/DistribuiFlow.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/DistribuiFlow.Tests/DistribuiFlow.Tests.csproj" />
