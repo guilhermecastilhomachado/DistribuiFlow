@@ -54,15 +54,9 @@ public sealed class ProductService : IProductService
         Guid id,
         CancellationToken cancellationToken = default)
     {
-        var product = await _productRepository.GetByIdAsync(
+        var product = await GetRequiredProductAsync(
             id,
             cancellationToken);
-
-        if (product is null)
-        {
-            throw new NotFoundException(
-                $"Produto com identificador '{id}' não encontrado.");
-        }
 
         return MapToResponse(product);
     }
@@ -76,6 +70,92 @@ public sealed class ProductService : IProductService
         return products
             .Select(MapToResponse)
             .ToArray();
+    }
+
+    public async Task<ProductResponse> UpdateAsync(
+        Guid id,
+        UpdateProductRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var product = await GetRequiredProductAsync(
+            id,
+            cancellationToken);
+
+        product.UpdateDetails(
+            request.Name,
+            request.Price);
+
+        await _unitOfWork.SaveChangesAsync(
+            cancellationToken);
+
+        return MapToResponse(product);
+    }
+
+    public async Task<ProductResponse> IncreaseStockAsync(
+        Guid id,
+        ChangeStockRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var product = await GetRequiredProductAsync(
+            id,
+            cancellationToken);
+
+        product.IncreaseStock(request.Quantity);
+
+        await _unitOfWork.SaveChangesAsync(
+            cancellationToken);
+
+        return MapToResponse(product);
+    }
+
+    public async Task<ProductResponse> DecreaseStockAsync(
+        Guid id,
+        ChangeStockRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var product = await GetRequiredProductAsync(
+            id,
+            cancellationToken);
+
+        product.DecreaseStock(request.Quantity);
+
+        await _unitOfWork.SaveChangesAsync(
+            cancellationToken);
+
+        return MapToResponse(product);
+    }
+
+    public async Task<ProductResponse> DeactivateAsync(
+        Guid id,
+        CancellationToken cancellationToken = default)
+    {
+        var product = await GetRequiredProductAsync(
+            id,
+            cancellationToken);
+
+        product.Deactivate();
+
+        await _unitOfWork.SaveChangesAsync(
+            cancellationToken);
+
+        return MapToResponse(product);
+    }
+
+    private async Task<Product> GetRequiredProductAsync(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        var product = await _productRepository.GetByIdAsync(
+            id,
+            cancellationToken);
+
+        if (product is null)
+        {
+            throw new NotFoundException(
+                $"Produto com identificador '{id}' não encontrado.");
+        }
+
+        return product;
     }
 
     private static ProductResponse MapToResponse(Product product)

@@ -14,4 +14,23 @@ public interface IProductService
 
     Task<IReadOnlyCollection<ProductResponse>> GetAllAsync(
         CancellationToken cancellationToken = default);
+
+    Task<ProductResponse> UpdateAsync(
+        Guid id,
+        UpdateProductRequest request,
+        CancellationToken cancellationToken = default);
+
+    Task<ProductResponse> IncreaseStockAsync(
+        Guid id,
+        ChangeStockRequest request,
+        CancellationToken cancellationToken = default);
+
+    Task<ProductResponse> DecreaseStockAsync(
+        Guid id,
+        ChangeStockRequest request,
+        CancellationToken cancellationToken = default);
+
+    Task<ProductResponse> DeactivateAsync(
+        Guid id,
+        CancellationToken cancellationToken = default);
 }
