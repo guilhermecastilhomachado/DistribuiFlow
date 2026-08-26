@@ -10,6 +10,8 @@ public sealed class FakeProductRepository : IProductRepository
     public IReadOnlyCollection<Product> Products =>
         _products.AsReadOnly();
 
+    public int UpdateCallCount { get; private set; }
+
     public Task<Product?> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken = default)
@@ -53,6 +55,8 @@ public sealed class FakeProductRepository : IProductRepository
         Product product,
         CancellationToken cancellationToken = default)
     {
+        UpdateCallCount++;
+
         return Task.CompletedTask;
     }
 

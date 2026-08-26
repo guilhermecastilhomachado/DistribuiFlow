@@ -85,6 +85,10 @@ public sealed class ProductService : IProductService
             request.Name,
             request.Price);
 
+        await _productRepository.UpdateAsync(
+            product,
+            cancellationToken);
+
         await _unitOfWork.SaveChangesAsync(
             cancellationToken);
 
@@ -101,6 +105,10 @@ public sealed class ProductService : IProductService
             cancellationToken);
 
         product.IncreaseStock(request.Quantity);
+
+        await _productRepository.UpdateAsync(
+            product,
+            cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(
             cancellationToken);
@@ -119,6 +127,10 @@ public sealed class ProductService : IProductService
 
         product.DecreaseStock(request.Quantity);
 
+        await _productRepository.UpdateAsync(
+            product,
+            cancellationToken);
+
         await _unitOfWork.SaveChangesAsync(
             cancellationToken);
 
@@ -134,6 +146,10 @@ public sealed class ProductService : IProductService
             cancellationToken);
 
         product.Deactivate();
+
+        await _productRepository.UpdateAsync(
+            product,
+            cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(
             cancellationToken);
