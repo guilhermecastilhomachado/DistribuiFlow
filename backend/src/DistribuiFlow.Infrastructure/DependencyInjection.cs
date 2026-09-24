@@ -1,4 +1,7 @@
+using DistribuiFlow.Application.Interfaces;
+using DistribuiFlow.Application.Interfaces.Repositories;
 using DistribuiFlow.Infrastructure.Persistence;
+using DistribuiFlow.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +21,10 @@ public static class DependencyInjection
 
         services.AddDbContext<DistribuiFlowDbContext>(options =>
             options.UseNpgsql(connectionString));
+
+        services.AddScoped<IProductRepository, ProductRepository>();
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }
