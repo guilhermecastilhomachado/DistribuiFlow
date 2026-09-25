@@ -24,13 +24,13 @@ public sealed class ProductsController : ControllerBase
             request,
             cancellationToken);
 
-        return CreatedAtAction(
-            nameof(GetByIdAsync),
+        return CreatedAtRoute(
+            "GetProductById",
             new { id = product.Id },
             product);
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("{id:guid}", Name = "GetProductById")]
     public async Task<ActionResult<ProductResponse>> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken)
